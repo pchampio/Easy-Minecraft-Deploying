@@ -1,0 +1,122 @@
+#!/bin/bash
+
+# Use strict
+set -uo pipefail
+IFS=$'\n\t'
+
+# Color
+red=`tput setaf 1`
+green=`tput setaf 2`
+reset=`tput sgr0`
+
+show_spinner() {
+  local -r pid="${1}"
+  local -r delay='0.20'
+  local spinstr='\|/-'
+  local temp
+  while ps a | awk '{print $1}' | grep -q "${pid}"; do
+    temp="${spinstr#?}"
+    printf " [%c]  " "${spinstr}"
+    spinstr=${temp}${spinstr%"${temp}"}
+    sleep "${delay}"
+    printf "\b\b\b\b\b\b"
+  done
+  printf "    \b\b\b\b"
+}
+
+sudo mktemp > /dev/null # Trigger sudo ( if password )
+
+lsof -i :25565 2>&1 > /dev/null
+if [[ $? -ne 1 ]]; then
+  echo -e "\n${red}Can not run 2 minecraft server at once\n${reset}"
+  exit
+fi
+
+echo -e "\n${green}Name of directory : ${reset}"
+read dirfile
+mkdir -p $dirfile
+cd $dirfile
+
+echo "${red}Update sources list${reset}"
+sudo apt-get update 2>&1 >/dev/null &
+show_spinner "$!"
+
+which java 2>&1 > /dev/null
+if [ $? -ne 0 ]; then
+  echo "${red}Could not find java${reset}"
+  sudo apt-get install default-jdk
+fi
+
+which wget 2>&1 > /dev/null
+if [ $? -ne 0 ]; then
+  echo "${red}Could not find wget${reset}"
+  sudo apt-get install wget
+fi
+
+which zip  2>&1 > /dev/null
+if [ $? -ne 0 ]; then
+  echo "${red}Could not find zip${reset}"
+  sudo apt-get install zip
+fi
+
+which screen 2>&1 > /dev/null
+if [ $? -ne 0 ]; then
+  echo "${red}Could not find screen${reset}"
+  sudo apt-get install screen
+fi
+
+echo -e "\n${green}Download a Map [default No] : ${reset}"
+read inputs
+if [[ $inputs =~ ^([yY][eE][sS]|[yY])$ ]]
+then
+  echo -e "\n${green}Give me a link (zip)${reset}"
+  read Link
+  if [[ ! $Link =~ ^\s*.*.zip' '*$ ]]; then
+    echo -e "\n${red}Only zip file are allow\n${reset}"
+    rm -rf ${dirfile}
+    exit
+  fi
+  wget --quiet $Link -O world.zip &
+  show_spinner "$!"
+  unzip -qq world.zip
+  pwdWorld=`find . -name  level.dat | rev | cut -d '/' -f 2- | rev`
+  rm world.zip
+  mkdir world
+  mv "$pwdWorld"/* world/
+  rm -rf "$pwdWorld"
+  if [[ "$(ls -A .)" ]]; then
+    echo -e "\n${red}Creator README :\n${reset}"
+    ls --hide "world"
+  fi
+fi
+
+echo -e "\n${green}Minecraft version (1.8.9): ${reset}"
+read McVersion
+Vlink=`wget -q -O - https://mcversions.net/ | \
+  grep -Po "<\s*a \s*href=\"([^\"]*game/${McVersion}/server[^\"]*)\"" | grep -oP "http[^\"]*"`
+
+if [[ $Vlink = *[!\ ]* ]]; then
+  echo -e "\n${red}Downloading Minecraft server${reset}"
+  wget --quiet -O minecraft_server.jar ${Vlink} &
+  show_spinner "$!"
+else
+  echo -e "\n${red}Minecraft version not found ${reset}https://mcversions.net/\n"
+  rm -rf ${dirfile}
+  exit
+fi
+
+# First run init
+echo "eula=true" > eula.txt
+echo stop | java -Xmx4096M -Xms4096M -jar minecraft_server.jar nogui
+
+vi server.properties
+
+echo " cd ${dirfile} && screen -S Minecraft_${dirfile} -Q select . > /dev/null && " \
+  " screen -r Minecraft_${dirfile} || (screen -dmS Minecraft_${dirfile} bash -c " \
+  " 'java -Xmx4096M -Xms4096M -jar minecraft_server.jar nogui;'"\
+  " && echo 'Server started')" > ../run_${dirfile}.sh
+chmod 700 ../run_${dirfile}.sh
+
+screen -dmS Minecraft_${dirfile} bash -c 'java -Xmx4096M -Xms4096M -jar minecraft_server.jar nogui;'
+
+echo -e "\n${green}Execute ${red}./run_${dirfile}.sh${green} to reconnect/start${reset}"
