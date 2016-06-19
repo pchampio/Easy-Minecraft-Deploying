@@ -25,4 +25,4 @@ Setting up an Minecraft server is now to simple. You don't nee anymore find the 
  ```
  
 #### Demo 
-[Asciinema](https://asciinema.org/a/49460)
+![Asciinema](https://asciinema.org/a/49460)
