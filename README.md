@@ -5,20 +5,20 @@ Setting up an Minecraft server is now to simple. You don't nee anymore find the 
 
 #### Features (in order of execution) :
   - Auto installation of
-    * java wget screen zip
+    * `java` `wget` `screen` `zip`
   - Download a minecraft map and unzip it
   - Download the server minecraft related to the version
   - Ask you to configure the **server.properties**
-  - Run the server in a screen session
-  - Create a run script to allow you to easy reconnect to the related Minecraft-server, or will start the server
+  - Run the server in a `screen` session
+  - Create a run script to allow you to easy **reconnect** to the related Minecraft-server, or will **start** the server
 
 #### Installation
- - wget
+ - wget  
  `sh
  wget -O Easy_minecraft https://raw.githubusercontent.com/Drakirus/Easy-Minecraft-Deploying/master/Easy_minecraft
  chmod 700 ./Easy_minecraft
  `
- - curl
+ - curl  
  `sh
  curl -O https://raw.githubusercontent.com/Drakirus/Easy-Minecraft-Deploying/master/Easy_minecraft
  chmod 700 ./Easy_minecraft
