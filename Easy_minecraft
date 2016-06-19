@@ -71,11 +71,11 @@ if [[ $inputs =~ ^([yY][eE][sS]|[yY])$ ]]
 then
   echo -e "\n${green}Give me a link (zip)${reset}"
   read Link
-  if [[ ! $Link =~ ^\s*.*.zip' '*$ ]]; then
-    echo -e "\n${red}Only zip file are allow\n${reset}"
-    rm -rf ${dirfile}
-    exit
-  fi
+  # if [[ ! $Link =~ ^\s*.*.zip' '*$ ]]; then
+  #   echo -e "\n${red}Only zip file are allow\n${reset}"
+  #   rm -rf ${dirfile}
+  #   exit
+  # fi
   wget --quiet $Link -O world.zip &
   show_spinner "$!"
   unzip -qq world.zip
