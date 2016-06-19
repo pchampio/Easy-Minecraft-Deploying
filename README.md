@@ -14,13 +14,11 @@ Setting up an Minecraft server is now to simple. You don't nee anymore find the 
 
 #### Installation
  - wget  
- ```wget -O Easy_minecraft https://raw.githubusercontent.com/Drakirus/Easy-Minecraft-Deploying/master/Easy_minecraft && chmod 700 ./Easy_minecraft
- ```
+ ```wget -O Easy_minecraft https://raw.githubusercontent.com/Drakirus/Easy-Minecraft-Deploying/master/Easy_minecraft && chmod 700 ./Easy_minecraft ```
  
  - curl  
  ```curl -O https://raw.githubusercontent.com/Drakirus/Easy-Minecraft-Deploying/master/Easy_minecraft
-&& chmod 700 ./Easy_minecraft
- ```
+&& chmod 700 ./Easy_minecraft ```
  
 #### Demo 
 [Asciinema](https://asciinema.org/a/49460)
