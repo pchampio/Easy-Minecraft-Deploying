@@ -79,6 +79,11 @@ then
   wget --quiet $Link -O world.zip &
   show_spinner "$!"
   unzip -qq world.zip
+  if [ $? -ne 0 ]; then
+    echo "${red}Failed to unzip${reset}"
+    rm -rf ${dirfile}
+    exit
+  fi
   pwdWorld=`find . -name  level.dat | rev | cut -d '/' -f 2- | rev`
   rm world.zip
   mkdir world
