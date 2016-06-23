@@ -5,9 +5,9 @@ set -uo pipefail
 IFS=$'\n\t'
 
 # Color
-red='\e[31m'
-green='\e[39m'
-reset='\e[32m'
+red='\033[0;31m'
+green='\033[0;32m'
+reset='\033[0m'
 
 show_spinner() {
   local -r pid="${1}"
@@ -43,13 +43,13 @@ show_spinner "$!"
 
 which java 2>&1 > /dev/null
 if [ $? -ne 0 ]; then
-  echo "${red}Could not find java${reset}"
+  echo -e "${red}Could not find java${reset}"
   sudo apt-get install default-jdk
 fi
 
 which wget 2>&1 > /dev/null
 if [ $? -ne 0 ]; then
-  echo "${red}Could not find wget${reset}"
+  echo -e "${red}Could not find wget${reset}"
   sudo apt-get install wget
 fi
 
@@ -61,7 +61,7 @@ fi
 
 which screen 2>&1 > /dev/null
 if [ $? -ne 0 ]; then
-  echo "${red}Could not find screen${reset}"
+  echo -e "${red}Could not find screen${reset}"
   sudo apt-get install screen
 fi
 
@@ -80,7 +80,7 @@ then
   show_spinner "$!"
   unzip -qq world.zip
   if [ $? -ne 0 ]; then
-    echo "${red}Failed to unzip${reset}"
+    echo -e "${red}Failed to unzip${reset}"
     rm -rf ${dirfile}
     exit
   fi
