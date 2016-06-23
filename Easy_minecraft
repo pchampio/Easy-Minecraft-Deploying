@@ -37,7 +37,7 @@ read dirfile
 mkdir -p $dirfile
 cd $dirfile
 
-echo "${red}Update sources list${reset}"
+echo -e "${red}Update sources list${reset}"
 sudo apt-get update 2>&1 >/dev/null &
 show_spinner "$!"
 
@@ -55,7 +55,7 @@ fi
 
 which zip  2>&1 > /dev/null
 if [ $? -ne 0 ]; then
-  echo "${red}Could not find zip${reset}"
+  echo -e "${red}Could not find zip${reset}"
   sudo apt-get install zip
 fi
 
