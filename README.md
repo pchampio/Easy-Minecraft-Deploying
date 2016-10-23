@@ -1,7 +1,7 @@
 # Easy-Minecraft-Deploying
 Deploy Minecraft in 60 seconds  
 
-Setting up a Minecraft server is now way to simple. You don't need anymore to find the related Minecraft-server link to download.  
+Setting up a Minecraft server is now way too simple. You don't need anymore to find the related Minecraft-server link to download.  
 
 #### Features (in order of execution) :
   - Auto installation of
