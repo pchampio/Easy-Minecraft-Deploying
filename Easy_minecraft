@@ -115,7 +115,7 @@ echo stop | java -Xmx4096M -Xms2048M -jar minecraft_server.jar nogui
 
 vi server.properties
 
-echo " cd ${dirfile} && screen -S Minecraft_${dirfile} -Q select . > /dev/null && " \
+echo "export TERM=screen-256color cd ${dirfile} && screen -S Minecraft_${dirfile} -Q select . > /dev/null && " \
   " screen -r Minecraft_${dirfile} || (screen -dmS Minecraft_${dirfile} bash -c " \
   " 'java -Xmx4096M -Xms2048M -jar minecraft_server.jar nogui;'"\
   " && echo 'Server started')" > ../run_${dirfile}.sh
