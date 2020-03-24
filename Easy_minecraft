@@ -117,7 +117,7 @@ vi server.properties
 
 echo " cd ${dirfile} && screen -S Minecraft_${dirfile} -Q select . > /dev/null && " \
   " screen -r Minecraft_${dirfile} || (screen -dmS Minecraft_${dirfile} bash -c " \
-  " 'java -Xmx4096M -Xms4096M -jar minecraft_server.jar nogui;'"\
+  " 'java -Xmx4096M -Xms2048M -jar minecraft_server.jar nogui;'"\
   " && echo 'Server started')" > ../run_${dirfile}.sh
 chmod 700 ../run_${dirfile}.sh
 
