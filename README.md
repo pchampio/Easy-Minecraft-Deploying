@@ -1,8 +1,6 @@
 # Easy-Minecraft-Deploying
 Deploy Minecraft in 60 seconds  
 
-Setting up a Minecraft server is now way too simple. You don't need anymore to find the related Minecraft-server link to download.  
-
 #### Features (in order of execution) :
   - Auto installation of
     * `java` `wget` `screen` `zip`
@@ -14,11 +12,11 @@ Setting up a Minecraft server is now way too simple. You don't need anymore to f
 
 #### Installation
  - wget  
- ```wget -O Easy_minecraft https://raw.githubusercontent.com/Drakirus/Easy-Minecraft-Deploying/master/Easy_minecraft && chmod 700 ./Easy_minecraft ```
+`
+wget -O Easy_minecraft https://raw.githubusercontent.com/Drakirus/Easy-Minecraft-Deploying/master/Easy_minecraft && chmod 700 ./Easy_minecraft`
  
  - curl  
- ```curl -O https://raw.githubusercontent.com/Drakirus/Easy-Minecraft-Deploying/master/Easy_minecraft
-&& chmod 700 ./Easy_minecraft ```
+`curl -O https://raw.githubusercontent.com/Drakirus/Easy-Minecraft-Deploying/master/Easy_minecraft && chmod 700 ./Easy_minecraft`
  
 #### Demo 
 [Asciinema](https://asciinema.org/a/49460)
