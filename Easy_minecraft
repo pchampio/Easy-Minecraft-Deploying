@@ -96,10 +96,8 @@ then
   fi
 fi
 
-echo -e "\n${green}Minecraft version (1.8.9): ${reset}"
-read McVersion
-Vlink=`wget -q -O - https://mcversions.net/ | \
-  grep -Po "<\s*a \s*href=\"([^\"]*game/${McVersion}/server[^\"]*)\"" | grep -oP "http[^\"]*"`
+echo -e "\n${green}Download minecraft-server URL from: https://mcversions.net/${reset}"
+read Vlink
 
 if [[ $Vlink = *[!\ ]* ]]; then
   echo -e "\n${red}Downloading Minecraft server${reset}"
@@ -113,7 +111,7 @@ fi
 
 # First run init
 echo "eula=true" > eula.txt
-echo stop | java -Xmx4096M -Xms4096M -jar minecraft_server.jar nogui
+echo stop | java -Xmx4096M -Xms2048M -jar minecraft_server.jar nogui
 
 vi server.properties
 
@@ -123,6 +121,7 @@ echo " cd ${dirfile} && screen -S Minecraft_${dirfile} -Q select . > /dev/null &
   " && echo 'Server started')" > ../run_${dirfile}.sh
 chmod 700 ../run_${dirfile}.sh
 
-screen -dmS Minecraft_${dirfile} bash -c 'java -Xmx4096M -Xms4096M -jar minecraft_server.jar nogui;'
+screen -dmS Minecraft_${dirfile} bash -c 'java -Xmx4096M -Xms2048M -jar minecraft_server.jar nogui;'
 
-echo -e "\n${green}Execute ${red}./run_${dirfile}.sh${green} to reconnect/start${reset}"
+echo -e "\n\n\t${green}Execute ${red}./run_${dirfile}.sh${green} to reconnect/start${reset}"
+echo -e "\n\t${green}Press Ctrl-a d to detach from screen${reset}"
